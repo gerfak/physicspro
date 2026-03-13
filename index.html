@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics PRO - Главная</title>
+    <link rel="stylesheet" href="оформление.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</head>
+<body>
+
+    <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">🌙</button>
+
+    <header>
+        <h1>Physics PRO</h1>
+        <p>Интерактивная база знаний по физике для 7-11 классов</p>
+    </header>
+
+    <nav>
+        <a href="седьмой_класс.html">7 класс</a>
+        <a href="восьмой_класс.html">8 класс</a>
+        <a href="девятый_класс.html">9 класс</a>
+        <a href="десятый_класс.html">10 класс</a>
+	<a href="одиннадцатый_класс.html">11 класс</a>
+    </nav>
+
+    <div class="container">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <input type="text" id="formulaSearch" placeholder="Поиск любой формулы" autocomplete="off">
+                <button id="clearSearch" class="clear-search" title="Очистить">&times;</button>
+            </div>
+            <ul id="searchSuggestions" class="suggestions-list"></ul>
+        </div>
+	
+       <h2 class="section-title">Справочные данные и константы</h2>
+<div class="constants-container">
+    <table class="constants-table">
+        <thead>
+            <tr>
+                <th>Величина</th>
+                <th>Обозначение и значение</th>
+                <th>Где используется</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Ускорение свободного падения</td><td><span class="blue-constant">g ≈ 9,81 м/с²</span></td><td>Механика</td></tr>
+            <tr><td>Гравитационная постоянная</td><td><span class="blue-constant">G ≈ 6,67 · 10⁻¹¹ Н·м²/кг²</span></td><td>Тяготение</td></tr>
+            <tr><td>Скорость света в вакууме</td><td><span class="blue-constant">c ≈ 3 · 10⁸ м/с</span></td><td>Оптика, СТО, Кванты</td></tr>
+            <tr><td>Постоянная Планка</td><td><span class="blue-constant">h ≈ 6,63 · 10⁻³⁴ Дж·с</span></td><td>Квантовая физика</td></tr>
+            <tr><td>Элементарный заряд (электрон)</td><td><span class="blue-constant">e ≈ 1,6 · 10⁻¹⁹ Кл</span></td><td>Электричество, Кванты</td></tr>
+            <tr><td>Число Авогадро</td><td><span class="blue-constant">Nₐ ≈ 6,02 · 10²³ моль⁻¹</span></td><td>МКТ</td></tr>
+            <tr><td>Универсальная газовая постоянная</td><td><span class="blue-constant">R ≈ 8,31 Дж/(моль·К)</span></td><td>Термодинамика</td></tr>
+            <tr><td>Постоянная Больцмана</td><td><span class="blue-constant">k ≈ 1,38 · 10⁻²³ Дж/К</span></td><td>МКТ</td></tr>
+            <tr><td>Электрическая постоянная</td><td><span class="blue-constant">ε₀ ≈ 8,85 · 10⁻¹² Ф/м</span></td><td>Электростатика</td></tr>
+            <tr><td>Магнитная постоянная</td><td><span class="blue-constant">μ₀ ≈ 1,26 · 10⁻⁶ Гн/м</span></td><td>Магнетизм</td></tr>
+            <tr><td>Коэффициент Кулона</td><td><span class="blue-constant">k ≈ 9 · 10⁹ Н·м²/Кл²</span></td><td>Электростатика</td></tr>
+            <tr><td>Удельное сопротивление меди</td><td><span class="blue-constant">ρ ≈ 0,017 Ом·мм²/м</span></td><td>Постоянный ток</td></tr>
+            <tr><td>Удельная теплоемкость воды</td><td><span class="blue-constant">c ≈ 4200 Дж/(кг·°C)</span></td><td>Тепловые процессы</td></tr>
+            <tr><td>Электрохимический эквивалент (Cu)</td><td><span class="blue-constant">k ≈ 0,329 мг/Кл</span></td><td>Электролиз</td></tr>
+            <tr><td>Постоянная Хаббла</td><td><span class="blue-constant">H ≈ 70 (км/с)/Мпк</span></td><td>Астрономия</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .constants-container {
+        overflow-x: auto;
+        margin: 20px 0;
+        border-radius: 12px;
+        background: rgba(128, 128, 128, 0.05);
+        border: 1px solid rgba(128, 128, 128, 0.2);
+    }
+
+    .constants-table {
+        width: 100%;
+        border-collapse: collapse;
+        /* ГЛАВНЫЙ СЕКРЕТ: инверсия цвета. 
+           Таблица будет брать тот же цвет, что и текст твоей страницы */
+        color: inherit; 
+    }
+
+    .constants-table th {
+        background-color: rgba(52, 73, 94, 0.9);
+        color: #ffffff; /* Заголовки всегда белые на темном фоне шапки */
+        padding: 12px;
+        text-align: left;
+    }
+
+    .constants-table td {
+        padding: 10px 15px;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        /* Если основной текст страницы черный на светлой теме, 
+           здесь он тоже станет черным автоматически */
+    }
+
+    /* Синий цвет для обозначений — остается всегда приятным синим */
+    .blue-constant {
+        color: #3498db !important;
+        font-weight: bold;
+    }
+
+    /* На всякий случай принудительно для светлой темы, если inherit не сработает */
+    @media (prefers-color-scheme: light) {
+        .constants-table td {
+            color: #1a1a1a;
+        }
+    }
+
+    /* Для темной темы */
+    @media (prefers-color-scheme: dark) {
+        .constants-table td {
+            color: #ffffff;
+        }
+    }
+</style>
+        <section style="margin-top: 40px; text-align: center; opacity: 0.8;">
+            <p>Выбирай нужный класс в меню сверху или воспользуйся поиском, чтобы мгновенно найти формулу и воспользоваться встроенным калькулятором.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p style="text-align:center">Обратная связь:</p>
+        <div style="margin-top: 10px; text-align:center">
+            <a href="mailto:physicsprosupport@gmail.com"><img src="gmail.png" style="width: 30px; height: auto;"></a>
+            <a href="https://t.me/physicsprosupport" target="_blank"><img src="telegram.png" style="width: 30px; height: auto;"></a>
+        </div>
+        <p style="font-size: 0.8em; margin-top: 20px; opacity: 0.6; text-align:center">&copy; 2026 Справочник Physics PRO.</p>
+    </footer>
+
+    <script>
+        // --- 1. ЛОГИКА ТЕМЫ (LocalStorage) ---
+        const themeBtn = document.getElementById('themeBtn');
+        function updateBtnIcon() {
+            themeBtn.innerText = document.documentElement.hasAttribute('data-theme') ? '☀️' : '🌙';
+        }
+        updateBtnIcon();
+
+        function toggleTheme() {
+            if (document.documentElement.hasAttribute('data-theme')) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateBtnIcon();
+        }
+
+        // --- 2. БАЗА ДАННЫХ ДЛЯ ГЛОБАЛЬНОГО ПОИСКА ---
+        // Сюда добавляй новые формулы по мере создания страниц
+        const globalFormulas = [
+        {name: "Магнитная индукция", link: "одиннадцатый_класс.html"},
+	{name: "Сила Ампера", link: "одиннадцатый_класс.html"},
+	{name: "Сила Лоренца", link: "одиннадцатый_класс.html"},
+	{name: "Магнитный поток", link: "одиннадцатый_класс.html"},
+	{name: "Закон индукции", link: "одиннадцатый_класс.html"},
+	{name: "Индуктивность", link: "одиннадцатый_класс.html"},
+	{name: "ЭДС самоиндукции", link: "одиннадцатый_класс.html"},
+	{name: "Энергия катушки", link: "одиннадцатый_класс.html"},
+	{name: "Движение по окружности", link: "одиннадцатый_класс.html"},
+	{name: "Радиус", link: "одиннадцатый_класс.html"},
+	{name: "Период", link: "одиннадцатый_класс.html"},
+	{name: "Пружинный маятник", link: "одиннадцатый_класс.html"},
+	{name: "Математический маятник", link: "одиннадцатый_класс.html"},
+	{name: "Уравнение колебаний", link: "одиннадцатый_класс.html"},
+	{name: "Формула Томсона", link: "одиннадцатый_класс.html"},
+	{name: "Циклическая частота", link: "одиннадцатый_класс.html"},
+	{name: "ЗСЭ в контуре", link: "одиннадцатый_класс.html"},
+	{name: "Длина волны", link: "одиннадцатый_класс.html"},
+	{name: "Действующие значения", link: "одиннадцатый_класс.html"},
+	{name: "Трансформатор", link: "одиннадцатый_класс.html"},
+	{name: "Закон преломления", link: "одиннадцатый_класс.html"},
+	{name: "Показатель преломления", link: "одиннадцатый_класс.html"},
+	{name: "Формула тонкой линзы", link: "одиннадцатый_класс.html"},
+	{name: "Оптическая сила", link: "одиннадцатый_класс.html"},
+	{name: "Увеличение", link: "одиннадцатый_класс.html"},
+	{name: "Полное отражение", link: "одиннадцатый_класс.html"},
+	{name: "Максимум интерференции", link: "одиннадцатый_класс.html"},
+	{name: "Минимум интерференции", link: "одиннадцатый_класс.html"},
+	{name: "Дифракционная решетка", link: "одиннадцатый_класс.html"},
+	{name: "I постулат: принцип относительности", link: "одиннадцатый_класс.html"},
+	{name: "II постулат: скорость света", link: "одиннадцатый_класс.html"},
+	{name: "Замедление времени", link: "одиннадцатый_класс.html"},
+	{name: "Энергия", link: "одиннадцатый_класс.html"},
+	{name: "Энергия фотона", link: "одиннадцатый_класс.html"},
+	{name: "Импульс фотона", link: "одиннадцатый_класс.html"},
+	{name: "Уравнение фотоэффекта", link: "одиннадцатый_класс.html"},
+	{name: "Запирающее напряжение", link: "одиннадцатый_класс.html"},
+	{name: "Красная граница", link: "одиннадцатый_класс.html"},
+	{name: "Давление света", link: "одиннадцатый_класс.html"},
+	{name: "Масса фотона", link: "одиннадцатый_класс.html"},
+	{name: "Постулаты Бора", link: "одиннадцатый_класс.html"},
+	{name: "Радиоактивный распад", link: "одиннадцатый_класс.html"},
+	{name: "Альфа-распад", link: "одиннадцатый_класс.html"},
+	{name: "Бета-распад", link: "одиннадцатый_класс.html"},
+	{name: "Дефект массы", link: "одиннадцатый_класс.html"},
+	{name: "Энергия связи", link: "одиннадцатый_класс.html"},
+	{name: "Закон Хаббла", link: "одиннадцатый_класс.html"},
+	{name: "Светимость звезды", link: "одиннадцатый_класс.html"},
+	{name: "Скорость", link: "десятый_класс.html"},
+	{name: "Уравнение движения", link: "десятый_класс.html"},
+	{name: "Ускорение", link: "десятый_класс.html"},
+	{name: "Скорость", link: "десятый_класс.html"},
+	{name: "Перемещение", link: "десятый_класс.html"},
+	{name: "Перемещение", link: "десятый_класс.html"},
+	{name: "Уравнение координаты", link: "десятый_класс.html"},
+	{name: "Центрострем. ускорение", link: "десятый_класс.html"},
+	{name: "Период и Частота", link: "десятый_класс.html"},
+	{name: "Угловая скорость", link: "десятый_класс.html"},
+	{name: "Линейная скорость", link: "десятый_класс.html"},
+	{name: "Относительность движения", link: "десятый_класс.html"},
+	{name: "Свободное падение", link: "десятый_класс.html"},
+	{name: "Бросок под углом к горизонту", link: "десятый_класс.html"},
+	{name: "ЗСЭ с учетом трения", link: "десятый_класс.html"},
+	{name: "Момент силы и плечо", link: "десятый_класс.html"},
+	{name: "I закон Ньютона", link: "десятый_класс.html"},
+	{name: "II закон Ньютона", link: "десятый_класс.html"},
+	{name: "III закон Ньютона", link: "десятый_класс.html"},
+	{name: "Закон всемирного тяготения", link: "десятый_класс.html"},
+	{name: "Сила тяжести", link: "десятый_класс.html"},
+	{name: "Закон Гука", link: "десятый_класс.html"},
+	{name: "Сила трения скольжения", link: "десятый_класс.html"},
+	{name: "Вес тела", link: "десятый_класс.html"},
+	{name: "Движение ИСЗ", link: "десятый_класс.html"},
+	{name: "Импульс тела", link: "десятый_класс.html"},
+	{name: "ЗСИ", link: "десятый_класс.html"},
+	{name: "Механическая работа", link: "десятый_класс.html"},
+	{name: "Мощность", link: "десятый_класс.html"},
+	{name: "Кинетическая энергия", link: "десятый_класс.html"},
+	{name: "ЗСЭ", link: "десятый_класс.html"},
+	{name: "Eₚ (Тяжести)", link: "десятый_класс.html"},
+	{name: "Eₚ (Упругости)", link: "десятый_класс.html"},
+	{name: "Количество вещества", link: "десятый_класс.html"},
+	{name: "Число молекул", link: "десятый_класс.html"},
+	{name: "Давление и плотность", link: "десятый_класс.html"},
+	{name: "Основное уравнение МКТ", link: "десятый_класс.html"},
+	{name: "Энергия молекул", link: "десятый_класс.html"},
+	{name: "Менделеев — Клапейрон", link: "десятый_класс.html"},
+	{name: "Скорость молекул", link: "десятый_класс.html"},
+	{name: "Давление и скорость", link: "десятый_класс.html"},
+	{name: "Влажность воздуха", link: "десятый_класс.html"},
+	{name: "Изотермический (T=const)", link: "десятый_класс.html"},
+	{name: "Изобарный (p=const)", link: "десятый_класс.html"},
+	{name: "Изохорный (V=const)", link: "десятый_класс.html"},
+	{name: "Внутренняя энергия", link: "десятый_класс.html"},
+	{name: "Работа газа", link: "десятый_класс.html"},
+	{name: "I закон термодинамики", link: "десятый_класс.html"},
+	{name: "КПД тепловой машины", link: "десятый_класс.html"},
+	{name: "КПД цикла Карно", link: "десятый_класс.html"},
+	{name: "Нагревание и охлаждение", link: "десятый_класс.html"},
+	{name: "Плавление и кристаллизация", link: "десятый_класс.html"},
+	{name: "Парообразование", link: "десятый_класс.html"},
+	{name: "Сгорание топлива", link: "десятый_класс.html"},
+	{name: "Относительная влажность", link: "десятый_класс.html"},
+	{name: "Закон Кулона", link: "десятый_класс.html"},
+	{name: "Напряженность поля", link: "десятый_класс.html"},
+	{name: "Потенциал", link: "десятый_класс.html"},
+	{name: "Напряжение", link: "десятый_класс.html"},
+	{name: "Связь E и U", link: "десятый_класс.html"},
+	{name: "Электроемкость", link: "десятый_класс.html"},
+	{name: "Плоский конденсатор", link: "десятый_класс.html"},
+	{name: "Энергия конденсатора", link: "десятый_класс.html"},
+	{name: "Ом для неоднородной цепи", link: "десятый_класс.html"},
+	{name: "Поле точечного заряда", link: "десятый_класс.html"},
+	{name: "Работа поля", link: "десятый_класс.html"},
+	{name: "Сопротивление и нагрев", link: "десятый_класс.html"},
+	{name: "КПД источника", link: "десятый_класс.html"},
+	{name: "Сила тока", link: "десятый_класс.html"},
+	{name: "Закон Ома", link: "десятый_класс.html"},
+	{name: "Сопротивление", link: "десятый_класс.html"},
+	{name: "Работа тока", link: "десятый_класс.html"},
+	{name: "Мощность", link: "десятый_класс.html"},
+	{name: "Закон Джоуля — Ленца", link: "десятый_класс.html"},
+	{name: "Последовательное соед.", link: "десятый_класс.html"},
+	{name: "Параллельное соед.", link: "десятый_класс.html"},
+	{name: "ЭДС", link: "десятый_класс.html"},
+	{name: "Закон Ома для полной цепи", link: "десятый_класс.html"},
+	{name: "Ток КЗ", link: "десятый_класс.html"},
+	{name: "Закон электролиза Фарадея", link: "десятый_класс.html"},
+	{name: "Носители заряда в средах", link: "десятый_класс.html"},
+	{name: "Равномерное движение", link: "девятый_класс.html"},
+{name: "Ускорение", link: "девятый_класс.html"},
+{name: "Мгновенная скорость", link: "девятый_класс.html"},
+{name: "Путь (перемещение)", link: "девятый_класс.html"},
+{name: "Уравнение координаты", link: "девятый_класс.html"},
+{name: "Скорость в момент времени", link: "девятый_класс.html"},
+{name: "Высота", link: "девятый_класс.html"},
+{name: "Период", link: "девятый_класс.html"},
+{name: "Частота", link: "девятый_класс.html"},
+{name: "Линейная скорость", link: "девятый_класс.html"},
+{name: "Угловая скорость", link: "девятый_класс.html"},
+{name: "Центростремительное ускорение", link: "девятый_класс.html"},
+{name: "Первый закон Ньютона", link: "девятый_класс.html"},
+{name: "Второй закон Ньютона", link: "девятый_класс.html"},
+{name: "Сила трения скольжения", link: "девятый_класс.html"},
+{name: "Третий закон Ньютона", link: "девятый_класс.html"},
+{name: "Закон всемирного тяготения", link: "девятый_класс.html"},
+{name: "Невесомость", link: "девятый_класс.html"},
+{name: "Перегрузка", link: "девятый_класс.html"},
+{name: "Сила упругости (Закон Гука)", link: "девятый_класс.html"},
+{name: "Первая космическая", link: "девятый_класс.html"},
+{name: "Вторая космическая", link: "девятый_класс.html"},
+{name: "Покой или равн. движение (a = 0)", link: "девятый_класс.html"},
+{name: "Ускорение направлено ВВЕРХ", link: "девятый_класс.html"},
+{name: "Ускорение направлено ВНИЗ", link: "девятый_класс.html"},
+{name: "Условия равновесия тел", link: "девятый_класс.html"},
+{name: "Момент силы", link: "девятый_класс.html"},
+{name: "Импульс тела", link: "девятый_класс.html"},
+{name: "Закон сохранения импульса", link: "девятый_класс.html"},
+{name: "Механическая работа", link: "девятый_класс.html"},
+{name: "Кинетическая энергия", link: "девятый_класс.html"},
+{name: "Потенциальная энергия", link: "девятый_класс.html"},
+{name: "Полная энергия", link: "девятый_класс.html"},
+{name: "ЗСЭ", link: "девятый_класс.html"},
+{name: "Мощность", link: "девятый_класс.html"},
+{name: "Коэффициент полезного действия", link: "девятый_класс.html"},
+{name: "Период колебания", link: "девятый_класс.html"},
+{name: "Частота колебаний", link: "девятый_класс.html"},
+{name: "Математический маятник", link: "девятый_класс.html"},
+{name: "Энергия колебаний", link: "девятый_класс.html"},
+{name: "Длина волны", link: "девятый_класс.html"},
+{name: "Скорость волны", link: "девятый_класс.html"},
+{name: "Эхолокация", link: "девятый_класс.html"},
+{name: "Общая формула скорости", link: "девятый_класс.html"},
+{name: "Сила упругости (маятник)", link: "девятый_класс.html"},
+{name: "Ускорение маятника", link: "девятый_класс.html"},
+{name: "Период маятника", link: "девятый_класс.html"},
+{name: "Распространение ЭМ волн", link: "девятый_класс.html"},
+{name: "Электроёмкость", link: "девятый_класс.html"},
+{name: "Энергия конденсатора", link: "девятый_класс.html"},
+{name: "Период (Формула Томсона)", link: "девятый_класс.html"},
+{name: "Закон отражения света", link: "девятый_класс.html"},
+{name: "Абсолютный показатель", link: "девятый_класс.html"},
+{name: "Относительный показатель", link: "девятый_класс.html"},
+{name: "Закон преломления света", link: "девятый_класс.html"},
+{name: "Оптическая сила линзы", link: "девятый_класс.html"},
+{name: "Система из двух линз", link: "девятый_класс.html"},
+{name: "Заряд ядра", link: "девятый_класс.html"},
+{name: "Массовое число", link: "девятый_класс.html"},
+{name: "Дефект массы", link: "девятый_класс.html"},
+{name: "Энергия покоя", link: "девятый_класс.html"},
+{name: "Энергия связи", link: "девятый_класс.html"},
+{name: "Закон распада", link: "девятый_класс.html"},
+{name: "α-распад", link: "девятый_класс.html"},
+{name: "β-распад", link: "девятый_класс.html"},
+{name: "γ-распад", link: "девятый_класс.html"},
+{name: "Из Фаренгейта в Цельсий", link: "восьмой_класс.html"},
+{name: "Из Кельвина в Цельсий", link: "восьмой_класс.html"},
+{name: "Термическое расширение", link: "восьмой_класс.html"},
+{name: "Нагревание и охлаждение", link: "восьмой_класс.html"},
+{name: "Сгорание топлива", link: "восьмой_класс.html"},
+{name: "Плавление и кристаллизация", link: "восьмой_класс.html"},
+{name: "Испарение и конденсация", link: "восьмой_класс.html"},
+{name: "Абсолютная влажность", link: "восьмой_класс.html"},
+{name: "Относительная влажность", link: "восьмой_класс.html"},
+{name: "КПД теплового двигателя", link: "восьмой_класс.html"},
+{name: "Уравнение теплового баланса", link: "восьмой_класс.html"},
+{name: "Закон сохранения заряда", link: "восьмой_класс.html"},
+{name: "Сила тока", link: "восьмой_класс.html"},
+{name: "Электрическое напряжение", link: "восьмой_класс.html"},
+{name: "Электрическое сопротивление", link: "восьмой_класс.html"},
+{name: "Закон Ома для участка цепи", link: "восьмой_класс.html"},
+{name: "Работа тока", link: "восьмой_класс.html"},
+{name: "Мощность тока", link: "восьмой_класс.html"},
+{name: "Количество теплоты (Закон Джоуля-Ленца)", link: "восьмой_класс.html"},
+{name: "Электроэнергия", link: "восьмой_класс.html"},
+{name: "Сила тока (Последовательное)", link: "восьмой_класс.html"},
+{name: "Напряжение (Последовательное)", link: "восьмой_класс.html"},
+{name: "Сопротивление (Последовательное)", link: "восьмой_класс.html"},
+{name: "Сила тока (Параллельное)", link: "восьмой_класс.html"},
+{name: "Напряжение (Параллельное)", link: "восьмой_класс.html"},
+{name: "Сопротивление (Параллельное)", link: "восьмой_класс.html"},
+{name: "Правило правой руки", link: "восьмой_класс.html"},
+{name: "Правило левой руки", link: "восьмой_класс.html"},
+{name: "Магнитная индукция", link: "восьмой_класс.html"},
+{name: "Правило Ленца", link: "восьмой_класс.html"},
+{name: "Энергия магнитного поля", link: "восьмой_класс.html"},
+{name: "Действующее значение тока", link: "восьмой_класс.html"},
+{name: "Действующее напряжение", link: "восьмой_класс.html"},
+{name: "Коэффициент трансформации", link: "восьмой_класс.html"},
+{name: "Погрешность измерений", link: "седьмой_класс.html"},
+{name: "Изменение объёма", link: "седьмой_класс.html"},
+{name: "Период вращения", link: "седьмой_класс.html"},
+{name: "Частота вращения", link: "седьмой_класс.html"},
+{name: "Период колебаний", link: "седьмой_класс.html"},
+{name: "Частота колебаний", link: "седьмой_класс.html"},
+{name: "Скорость", link: "седьмой_класс.html"},
+{name: "Ускорение", link: "седьмой_класс.html"},
+{name: "Равнодействующая сила", link: "седьмой_класс.html"},
+{name: "Масса", link: "седьмой_класс.html"},
+{name: "Плотность вещества", link: "седьмой_класс.html"},
+{name: "Сила гравитации", link: "седьмой_класс.html"},
+{name: "Сила тяжести", link: "седьмой_класс.html"},
+{name: "Вес тела", link: "седьмой_класс.html"},
+{name: "Сила упругости", link: "седьмой_класс.html"},
+{name: "Давление", link: "седьмой_класс.html"},
+{name: "Атмосферное давление", link: "седьмой_класс.html"},
+{name: "Давление в жидкости (гидростатическое)", link: "седьмой_класс.html"},
+{name: "Закон Архимеда", link: "седьмой_класс.html"},
+{name: "Механическая работа", link: "седьмой_класс.html"},
+{name: "Мощность", link: "седьмой_класс.html"},
+{name: "Условие равновесия рычага", link: "седьмой_класс.html"},
+{name: "Момент силы", link: "седьмой_класс.html"},
+{name: "Коэффициент полезного действия (КПД)", link: "седьмой_класс.html"},
+{name: "Кинетическая энергия", link: "седьмой_класс.html"},
+{name: "Потенциальная энергия", link: "седьмой_класс.html"}
+        ];
+
+        // --- 3. ЛОГИКА ПОИСКА И КРЕСТИКА ---
+        const searchInput = document.getElementById('formulaSearch');
+        const clearBtn = document.getElementById('clearSearch');
+        const suggList = document.getElementById('searchSuggestions');
+
+        searchInput.addEventListener('input', function() {
+            const val = this.value.trim().toLowerCase();
+            
+            // Показываем/скрываем крестик
+            clearBtn.style.display = val.length > 0 ? 'block' : 'none';
+            
+            suggList.innerHTML = '';
+            
+            if (val.length < 1) {
+                suggList.style.display = 'none';
+                return;
+            }
+
+            const matches = globalFormulas.filter(f => f.name.toLowerCase().includes(val));
+
+            matches.forEach(m => {
+                const li = document.createElement('li');
+                li.innerText = m.name;
+                li.onclick = () => {
+    		const targetUrl = m.link + "?find=" + encodeURIComponent(m.name.trim());
+    		window.location.href = targetUrl;
+		};
+                suggList.appendChild(li);
+            });
+
+            suggList.style.display = matches.length > 0 ? 'block' : 'none';
+        });
+
+        // Кнопка очистки (крестик)
+        clearBtn.onclick = () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            suggList.style.display = 'none';
+            searchInput.focus();
+        };
+
+        // Закрытие списка при клике мимо
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                suggList.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
