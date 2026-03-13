@@ -96,9 +96,12 @@ nav a:hover {
 }
 
 /* Исправленный скругленный поиск */
+/* Найди это в оформление.css и замени: */
 .search-container {
     position: relative;
-    margin-bottom: 40px;
+    width: 90%;          /* Занимает 90% ширины экрана на мобилках */
+    max-width: 600px;    /* Но не больше 600px на компе */
+    margin: 20px auto;
 }
 
 #formulaSearch {
@@ -263,4 +266,5 @@ details[open] summary::after { transform: rotate(180deg); }
 .constants-container {
     background-color: var(--card-bg);
     border: 1px solid rgba(128, 128, 128, 0.2);
+
 }
