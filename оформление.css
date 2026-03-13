@@ -36,7 +36,11 @@ header {
     color: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-
+header {
+    text-align: center;
+    padding: 50px 20px;
+    margin-top: 60px; /* Этот отступ равен высоте нашей закрепленной панели */
+}
 /* Кнопка темы: правый верхний угол, только иконка */
 .theme-toggle {
     position: fixed;
@@ -297,6 +301,7 @@ details[open] summary::after { transform: rotate(180deg); }
         text-align: center;
     }
 }
+
 
 
 
