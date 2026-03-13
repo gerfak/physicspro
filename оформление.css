@@ -304,5 +304,6 @@ details[open] summary::after { transform: rotate(180deg); }
         min-width: 70px; /* Чтобы кнопки были аккуратными */
         text-align: center;
     }
-}c
+}
+
 
